@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styl.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Simple Homepage</title>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <a href="{% url "home" %}">Site_Home</a>
+        <a href="{% url "create_applicant_profile" %}">Make Profile</a>
+        <a href="{% url "applicant_dashboard" %}">Applicant_Dashboard</a>
+    </div>
+
+    <!-- Main content -->
+    <div class="content">
+        <h1>Welcome to the Induction Website</h1>
+        <p>Apply <a href = {% url "create_applicant_profile" %}> @makeprofile </a> and track progress <a href="{% url "applicant_dashboard" %}"> @applicant_dashboard</a> .</p>
+    </div>
+
+</body>
+</html>

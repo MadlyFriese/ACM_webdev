@@ -1,0 +1,13 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<h2>{{ title }}</h2>
+
+<form method="post">
+    {% csrf_token %}
+    <label for="interview_time">Interview Time:</label>
+    <input type="datetime-local" name="interview_time" required>
+    <button type="submit">Schedule Interview</button>
+</form>
+
+<a href="{% url 'admin:induction_applicant_changelist' %}">Back to applicants list</a>
+{% endblock %}
