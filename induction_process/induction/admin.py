@@ -91,7 +91,7 @@ class ApplicantAdmin(admin.ModelAdmin):
     def reject(self, request, queryset):
         queryset.update(status='rejected')
         for applicant in queryset:
-            subject = 'Interview Scheduled'
+            subject = 'Rejection'
             message = f'Dear {applicant.name},\n\nYou have been rejected.\n\nBest regards,\nClub'
             from_email = 'your-email@gmail.com'
             recipient_list = [applicant.email]
