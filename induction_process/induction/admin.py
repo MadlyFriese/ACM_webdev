@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.shortcuts import render, redirect , get_object_or_404
+from django.shortcuts import render, redirect 
 from django.urls import path
 from .forms import ScheduleInterviewForm
 from django.utils.html import format_html
@@ -19,9 +19,9 @@ class ApplicantAdmin(admin.ModelAdmin):
 
 
 
-    # Action to send interview email
+    
     def send_interview_email(self, request, queryset):
-        # Loop through the selected applicants and send an email
+        
         for applicant in queryset:
             subject = 'Interview Scheduled'
             message = f'Dear {applicant.name},\n\nYour interview has been scheduled on {applicant.interview_time}.\n\nBest regards,\nClub'
@@ -29,28 +29,27 @@ class ApplicantAdmin(admin.ModelAdmin):
             recipient_list = [applicant.email]
             send_mail(subject, message, from_email, recipient_list)
 
-        # Send a message to the admin interface
+        
         self.message_user(request, "Interview emails have been sent to the selected applicants.")
 
     send_interview_email.short_description = "Send interview email to selected applicants"
 
     def get_urls(self):
-        # Add custom URL for scheduling multiple applicants
+        
         urls = super().get_urls()
         custom_urls = [
             path('schedule_interview/', self.admin_site.admin_view(self.schedule_interview_action), name='schedule_interview'),
         ]
         return custom_urls + urls
 
-    # Action to schedule interviews for multiple applicants
+    
     def schedule_interview(self, request, queryset):
-        # Pass selected applicants to custom view for scheduling
-        selected = request.POST.getlist(ACTION_CHECKBOX_NAME)  # Use the manually defined constant
+    
+        selected = request.POST.getlist(ACTION_CHECKBOX_NAME)  
         return HttpResponseRedirect(f'./schedule_interview/?ids={",".join(selected)}')
 
     schedule_interview.short_description = "Schedule interview for selected applicants"
 
-    # Action that handles scheduling interview for multiple applicants
     def schedule_interview_action(self, request):
         ids = request.GET.get('ids')
         applicants = Applicant.objects.filter(id__in=ids.split(','))
